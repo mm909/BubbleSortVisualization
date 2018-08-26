@@ -25,7 +25,7 @@ class dataVisualization {
       var dataHeight = floor(map(this.data[i], this.dataMin, this.dataMax, 0, this.height - 1));
       var x = i * this.dataWidth;
       var y = this.height - dataHeight - 1;
-      if(i == curr){
+      if(i == curr || curr == -1){
         fill(0,255,0);
       } else {
         fill(255);

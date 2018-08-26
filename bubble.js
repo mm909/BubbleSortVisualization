@@ -1,5 +1,6 @@
 var i = 0;
 var j = 0;
+var sorting = true;
 var swapped = false;
 
 function setup() {
@@ -10,7 +11,7 @@ function setup() {
   data.setWidth(500);
   data.setBackgroundColor(150);
   data.setDataCount(10);
-  data.setDataMin(0);
+  data.setDataMin(-100);
   data.setDataMax(100);
   data.calcDataWidth();
   data.getNewData();
@@ -18,27 +19,34 @@ function setup() {
 }
 
 function draw(){
-  bubbleSort(data.data);
+  if(sorting)
+    bubbleSort(data.data);
+  else
+    data.draw(-1);
 }
 
 
-function bubbleSort(array, swapped) {
-
+function bubbleSort(array) {
     data.draw(i);
+
     if(array[i] > array[i + 1]) {
       swap(array, i, i + 1);
-    }
-    if(i < array.length){
-      i++;
-    } else {
-      i = 0;
-      j++;
-      console.log(j)
-      if(j == array.length - 1) {
-        noLoop();
-      }
+      swapped = true;
     }
 
+    if(i < array.length - j){
+      i++;
+    } else {
+
+      if(swapped == false) {
+        sorting = false;
+      } else {
+      swapped = false;
+      }
+
+      i = 0;
+      j++;
+    }
 }
 
 function swap(array, i, j) {
@@ -46,13 +54,4 @@ function swap(array, i, j) {
   var temp = array[i];
   array[i] = array[j];
   array[j] = temp;
-}
-
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
 }
